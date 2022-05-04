@@ -1,0 +1,71 @@
+#! /bin/sh
+
+#######################################################
+##                                                   ##
+##   ██████╗ ███████╗██████╗ ██╗    ██╗███╗   ███╗   ##
+##   ██╔══██╗██╔════╝██╔══██╗██║    ██║████╗ ████║   ##
+##   ██████╔╝███████╗██████╔╝██║ █╗ ██║██╔████╔██║   ##
+##   ██╔══██╗╚════██║██╔═══╝ ██║███╗██║██║╚██╔╝██║   ##
+##   ██████╔╝███████║██║     ╚███╔███╔╝██║ ╚═╝ ██║   ##
+##   ╚═════╝ ╚══════╝╚═╝      ╚══╝╚══╝ ╚═╝     ╚═╝   ##                                   
+##                                                   ##
+################### By: fhuaquisto ####################
+
+
+########################################################
+##                     ENV VARS                       ## 
+########################################################
+
+export PATH=${PATH}:/home/fhuaquisto/.local/bin
+
+########################################################
+##                     FUNCTIONS                      ##
+########################################################
+
+rule() { bspc rule -a "$@" & }
+config() { bspc config "$@" & }
+
+########################################################
+##                  AUTOSTART APPS                    ##
+########################################################
+
+# Run Sxhkd
+pgrep -x sxhkd > /dev/null || sxhkd &
+
+# Run Polybar
+sh ~/.config/polybar/launch.sh
+
+# Set keyboard (latam)
+setxkbmap latam &
+
+# Wallpaper
+nitrogen --restore &
+
+# Start picom
+picom &
+
+# Active numlock
+numlockx &
+########################################################
+##                   WINDOW RULES                     ##
+########################################################
+
+bspc monitor -d 1 2 3 4 5 6 7 8 9
+
+rule -a kitty                       follow=on focus=on
+rule -a Code                        follow=on focus=on
+rule -a brave                       follow=on focus=on
+rule mpv                            state=floating
+rule nitrogen                       state=floating
+
+########################################################
+##              GENERAL CONFIGURATION                 ##
+########################################################
+
+config border_width 2
+config window_gap 16
+config split_ratio 0.50
+
+config borderless_monocle true
+config gapless_monocle true
+config focus_follows_pointer true

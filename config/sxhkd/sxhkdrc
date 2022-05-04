@@ -1,0 +1,152 @@
+
+#################################################
+#	███████╗██╗  ██╗██╗  ██╗██╗  ██╗██████╗		#
+#	██╔════╝╚██╗██╔╝██║  ██║██║ ██╔╝██╔══██╗	#
+#	███████╗ ╚███╔╝ ███████║█████╔╝ ██║  ██║	#
+#	╚════██║ ██╔██╗ ██╔══██║██╔═██╗ ██║  ██║	#
+#	███████║██╔╝ ██╗██║  ██║██║  ██╗██████╔╝	#
+#	╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝╚═════╝		#
+################ By: fhuaquisto #################
+
+
+##---------- Keybindings for bspwm ----------##
+
+# Terminal (kitty)
+super + Return
+	kitty
+
+# Terminal (floating)
+super + shift + Return
+	bspc rule -a kitty -o state=floating follow=os center=true rectangle=640x360+0+0 && kitty
+
+# program launcher
+super + alt + m
+	sh ~/.local/bin/launcher
+
+# Color Picker
+super + alt + c
+	sh ~/.local/bin/xcolor-pick
+
+# Lockscreen
+super + alt + l
+	betterlockscreen -l
+
+# Screenshot
+super + alt + s
+	sh ~/.local/bin/takeshot --now
+
+# Screenshot 5s
+super + alt + s + 1
+	sh ~/.local/bin/takeshot --in5
+
+# Screenshot 10s
+super + alt + s + 2
+	sh ~/.local/bin/takeshot --in10
+
+# Screenshot active window
+super + alt + s + 3
+	sh ~/.local/bin/takeshot --win
+
+# Screenshot (Area)
+super + alt + s + 4
+	sh ~/.local/bin/takeshot --area
+
+# Volume (Up/Down)
+XF86Audio{Raise,Lower}Volume
+    sh ~/.local/bin/volume {up,down}
+
+# Volume (Mute/Unmute)
+XF86AudioMute
+    sh ~/.local/bin/volume mute
+
+# Brightness (Up/Down)
+XF86MonBrightness{Up,Down}
+	sh ~/.local/bin/brightness {up,down}
+
+
+##---------- Applications ----------##
+
+# Navegator (Brave)
+super + ctrl + b
+	brave
+
+# Archives (Thunar)
+super + ctrl + t
+	thunar
+
+# Archives (Ranger)
+super + ctrl + r
+	kitty ranger
+
+# Neofetch (Floating)
+super + ctrl + n
+	bspc rule -a kitty -o state=floating follow=os center=true rectangle=640x360+0+0 && kitty neofetch &
+
+
+##---------- Bspwm ----------##
+
+# Close App
+super + {_,shift + }w
+	bspc node -{c,}
+
+# Reload Keybindings
+super + Escape
+    pkill -USRI -x sxhkd
+
+# Bspwm (Quit/Restard)
+super + shift + {q,r}
+	bspc {quit,wm -r}
+
+
+# Split (Horizontal/Vertical/Cancel)
+super + {z,x,c}
+	bspc node -p {east,sourt,cancel}
+
+
+# make sxhkd reload its configuration files:
+super + Escape
+	pkill -USR1 -x sxhkd
+
+# Preselect ratio (1-9)
+super + alt + {1-9}
+	bspc node -o 0.{1-9}
+
+# Monocle
+super + a
+	bspc node -t "~"fullscreen
+
+# Set layout (Floating/Tiled/Pseudo_Tilde)
+super + {f,t,shift + t}
+	bspc node -t {floating,tiled,pseudo_tiled}
+
+# Set window edge (Up/Down/Left/Right)
+#super + {_,shift + }{Up,Down,Left,Right}
+#	bspc node -{f,s} {north,sourt,west,east}
+
+# Focus window (Next/Prev)
+alt + {_,shift + }Tab
+	bspc node -f {next.local,prev.local}
+
+# Switch last workspace
+super + Tab
+	bspc desktop -f last
+
+# Send window to another workspace (1-9)
+super + {_,shift +}{1-9}
+	bspc {desktop -f,node -d} ^{1-9}
+
+# Expanding windows
+super + ctrl + {Left,Right,Up,Down}
+	bspc node -z {left -20 0, right 20 0, top 0 -20, bottom 0 20}
+
+# Shrinking windows
+super + alt + {Left,Right,Up,Down}
+	bspc node -z {left 20 0, right -20 0, top 0 20, bottom 0 -20}
+
+# Move windows
+super + shift + {Left,Right,Up,Down}
+	bspc node -v {-20 0,20 0,0 -20,0 20}
+
+# Focus/Move windows
+super + {_,shift + }{h,j,k,l}
+	bspc node -{f,s} {west,south,north,east}
